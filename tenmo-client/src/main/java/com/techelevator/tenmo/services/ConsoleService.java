@@ -1,10 +1,14 @@
 package com.techelevator.tenmo.services;
 
 
+import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.UserCredentials;
 
 import java.math.BigDecimal;
 import java.util.Scanner;
+
+// WILL HAVE TO WRITE METHODS IN HERE TO SHOW SUB MENU, BALANCE, ETC
+// WILL BE USING RESTTEMPLATE IN THE CLIENT SIDE
 
 public class ConsoleService {
 
@@ -86,6 +90,10 @@ public class ConsoleService {
 
     public void printErrorMessage() {
         System.out.println("An error occurred. Check the log for details.");
+    }
+
+    public void displayAccountBalance(Double balance){
+        System.out.println("Your current balance is: " + balance);
     }
 
 }
