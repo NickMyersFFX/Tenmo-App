@@ -19,4 +19,6 @@ public interface UserDao {
     int findIdByUsername(String username); // will use, principal object username, has that .getName() method
 
     boolean create(String username, String password); // dont need to use
+
+
 }

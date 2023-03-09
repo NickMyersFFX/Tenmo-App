@@ -1,0 +1,10 @@
+SELECT * FROM account
+
+SELECT user_id, username, password_hash, role FROM tenmo_user;
+
+SELECT * FROM transfer;
+
+
+SELECT transfer_id, account_from, account_to, amount  FROM transfer 
+JOIN account ON account.account_id = transfer.account_to
+JOIN tenmo_user ON account.user_id = tenmo_user.user_id;
