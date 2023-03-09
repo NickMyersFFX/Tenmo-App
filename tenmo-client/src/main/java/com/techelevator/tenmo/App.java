@@ -4,10 +4,7 @@ import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.AuthenticatedUser;
 import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.model.UserCredentials;
-import com.techelevator.tenmo.services.AccountService;
-import com.techelevator.tenmo.services.AuthenticationService;
-import com.techelevator.tenmo.services.ConsoleService;
-import com.techelevator.tenmo.services.UserService;
+import com.techelevator.tenmo.services.*;
 
 import java.util.ArrayList;
 
@@ -23,6 +20,7 @@ public class App {
     private AuthenticatedUser currentUser;
     private AccountService accountService;
     private UserService userService;
+    private TransferService transferService;
 
     public static void main(String[] args) {
         App app = new App();
@@ -122,6 +120,7 @@ public class App {
             consoleService.displayUsers(user);
         } else consoleService.printErrorMessage();
 
+       // transferService.gettingTransfer();
         consoleService.promptForInt("Please enter a User Id: ");
         consoleService.promptForInt("Please enter an amount: ");
 
