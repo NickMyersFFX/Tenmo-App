@@ -2,10 +2,14 @@ package com.techelevator.tenmo;
 
 import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.AuthenticatedUser;
+import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.model.UserCredentials;
 import com.techelevator.tenmo.services.AccountService;
 import com.techelevator.tenmo.services.AuthenticationService;
 import com.techelevator.tenmo.services.ConsoleService;
+import com.techelevator.tenmo.services.UserService;
+
+import java.util.ArrayList;
 
 // might need to add things here
 
@@ -18,6 +22,7 @@ public class App {
 
     private AuthenticatedUser currentUser;
     private AccountService accountService;
+    private UserService userService;
 
     public static void main(String[] args) {
         App app = new App();
@@ -31,6 +36,7 @@ public class App {
             mainMenu();
         }
     }
+
     private void loginMenu() {
         int menuSelection = -1;
         while (menuSelection != 0 && currentUser == null) {
@@ -64,6 +70,8 @@ public class App {
             consoleService.printErrorMessage();
         } else {
             accountService = new AccountService(API_BASE_URL, currentUser);
+
+            userService = new UserService(API_BASE_URL, currentUser);
         }
     }
 
@@ -91,27 +99,36 @@ public class App {
         }
     }
 
-	private void viewCurrentBalance() {
+    private void viewCurrentBalance() {
         Double accountBalance = accountService.getAccountBalance().getBalance();
 
         consoleService.displayAccountBalance(accountBalance);
-		
-	}
 
-	private void viewTransferHistory() {
-		// TODO Auto-generated method stub
-		
-	}
+    }
 
-	private void viewPendingRequests() {
-		// TODO Auto-generated method stub
-		
-	}
+    private void viewTransferHistory() {
+        // TODO Auto-generated method stub
 
-	private void sendBucks() {
-		// TODO Auto-generated method stub
-		
-	}
+    }
+
+    private void viewPendingRequests() {
+        // TODO Auto-generated method stub
+
+    }
+
+    private void sendBucks() {
+        User[] user = userService.listOfAllUsers();
+        if (user != null) {
+            consoleService.displayUsers(user);
+        } else consoleService.printErrorMessage();
+
+        consoleService.promptForInt("Please enter a User Id: ");
+        consoleService.promptForInt("Please enter an amount: ");
+
+    }
+
+
+
 
 	private void requestBucks() {
 		// TODO Auto-generated method stub

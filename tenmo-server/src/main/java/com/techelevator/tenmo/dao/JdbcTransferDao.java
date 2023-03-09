@@ -17,7 +17,7 @@ public class JdbcTransferDao implements TransferDao {
 
 
     @Override
-    public Transfer viewTransfers(int transferId, int accountFrom, int accountTo, int amount) {
+    public Transfer sendMoney(int transferId, int accountFrom, int accountTo, double amount) {
         return null;
     }
 }

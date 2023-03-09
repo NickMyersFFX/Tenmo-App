@@ -7,7 +7,7 @@ public class Transfer {
     private int transferStatusId;
     private int accountFrom;
     private int accountTo;
-    private int amount;
+    private double amount;
 
     public int getTransferId() {
         return transferId;
@@ -49,11 +49,11 @@ public class Transfer {
         this.accountTo = accountTo;
     }
 
-    public int getAmount() {
+    public double getAmount() {
         return amount;
     }
 
-    public void setAmount(int amount) {
+    public void setAmount(double amount) {
         this.amount = amount;
     }
 }

@@ -2,6 +2,7 @@ package com.techelevator.tenmo.services;
 
 
 import com.techelevator.tenmo.model.Account;
+import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.model.UserCredentials;
 
 import java.math.BigDecimal;
@@ -96,4 +97,11 @@ public class ConsoleService {
         System.out.println("Your current balance is: " + balance);
     }
 
+    public void displayUsers(User[] user) {
+        System.out.println("List of Users: \n");
+        for (User users : user) {
+            System.out.println("Name: "  + users.getUsername() + " || " + "User Id: " + users.getId());
+        }
+
+    }
 }

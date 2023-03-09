@@ -29,4 +29,10 @@ private static final Account ACCOUNT_1 = new Account(2001, 1001, 1000.00);
 
     }
 
+    @Test
+    public void seeAccountBalance_returns_incorrect_balance() {
+        Account account = jdbcAccountDao.seeAccountBalance(1001);
+        Assert.assertNotEquals(2000.00, account.getBalance(), 0.009);
+
+    }
 }
