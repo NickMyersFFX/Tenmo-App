@@ -42,18 +42,21 @@ public class JdbcTransferDao implements TransferDao {
     }
 
     @Override
-    public void updateBalanceSender(Transfer transfer) {
+    public void updateBalance(Transfer transfer) {
         String sql = "UPDATE account SET balance = (balance - ?) WHERE account_id = ?";
         jdbcTemplate.update(sql, transfer.getAmount(), transfer.getAccountFrom());
+        String sql2 = "UPDATE account SET balance = (balance + ?) WHERE account_id = ?";
+        jdbcTemplate.update(sql2, transfer.getAmount(), transfer.getAccountTo());
+
 
     }
 
-    @Override
-    public void updateBalanceReceiver(Transfer transfer) {
-        String sql = "UPDATE account SET balance = (balance + ?) WHERE account_id = ?";
-        jdbcTemplate.update(sql, transfer.getAmount(), transfer.getAccountTo());
-
-    }
+//    @Override
+//    public void updateBalanceReceiver(Transfer transfer) {
+//        String sql = "UPDATE account SET balance = (balance + ?) WHERE account_id = ?";
+//        jdbcTemplate.update(sql, transfer.getAmount(), transfer.getAccountTo());
+//
+//    }
 
 
     private Transfer mapRowToTransfer(SqlRowSet rows) {

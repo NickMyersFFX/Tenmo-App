@@ -2,6 +2,7 @@ package com.techelevator.tenmo.services;
 
 import com.techelevator.tenmo.model.Account;
 import com.techelevator.tenmo.model.AuthenticatedUser;
+import com.techelevator.tenmo.model.User;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
@@ -32,5 +33,33 @@ public class AccountService {
 
     }
 
+   public Account[] listOfAllAccounts() {
+       Account[] accounts = null;
+       HttpHeaders headers = new HttpHeaders();
+       headers.setBearerAuth(currentUser.getToken());
+
+       HttpEntity<Void> entityForGet = new HttpEntity<Void>(headers);
+
+       ResponseEntity<Account[]> response = restTemplate.exchange(
+               baseApiUrl + "accounts", // URL
+               HttpMethod.GET,                    // HttpMethod (GET, POST, PUT, DELETE)
+               entityForGet,                      // HttpEntity with BearerAuth set to the token in the header
+               Account[].class);              // Data type of the response
+
+       accounts = response.getBody(); // getBody() retrieves the deserialized object(s) from the response ResponseEntity
+
+       return accounts;
+   }
+
+   public int gettingAccountIdByUserId(int userId) {
+        int accountId = 0;
+        for (int i = 0; i < listOfAllAccounts().length; i++) {
+            if (listOfAllAccounts()[i].getUserId() == userId) {
+                accountId = listOfAllAccounts()[i].getAccountId();
+            }
+
+        }
+        return accountId;
+   }
 
 }

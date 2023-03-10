@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.util.ArrayList;
+import java.util.List;
 
 @PreAuthorize("isAuthenticated()")
 @RestController
@@ -35,5 +37,9 @@ public AccountController (AccountDao accountDao, UserDao userDao) {
     return accountDao.seeAccountBalance(loggedInUsersId);
 }
 
+    @RequestMapping(path = "/accounts", method = RequestMethod.GET)
+    public List<Account> displaysAllAccounts(Principal principal) {
+        return accountDao.findAll();
 
+    }
 }

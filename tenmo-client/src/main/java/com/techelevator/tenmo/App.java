@@ -1,11 +1,9 @@
 package com.techelevator.tenmo;
 
-import com.techelevator.tenmo.model.Account;
-import com.techelevator.tenmo.model.AuthenticatedUser;
-import com.techelevator.tenmo.model.User;
-import com.techelevator.tenmo.model.UserCredentials;
+import com.techelevator.tenmo.model.*;
 import com.techelevator.tenmo.services.*;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 
 // might need to add things here
@@ -68,7 +66,7 @@ public class App {
             consoleService.printErrorMessage();
         } else {
             accountService = new AccountService(API_BASE_URL, currentUser);
-
+            transferService = new TransferService(API_BASE_URL, currentUser);
             userService = new UserService(API_BASE_URL, currentUser);
         }
     }
@@ -120,9 +118,14 @@ public class App {
             consoleService.displayUsers(user);
         } else consoleService.printErrorMessage();
 
-       // transferService.gettingTransfer();
-        consoleService.promptForInt("Please enter a User Id: ");
-        consoleService.promptForInt("Please enter an amount: ");
+
+        int idTo = consoleService.promptForInt("Please enter a User Id: ");
+        BigDecimal amount =  consoleService.promptForBigDecimal("Please enter an amount: ");
+
+        Transfer transfer = transferService.gettingTransfer
+                (accountService.gettingAccountIdByUserId(currentUser.getUser().getId()), accountService.gettingAccountIdByUserId(idTo), amount.doubleValue());
+
+        transferService.updateBalance(transfer);
 
     }
 

@@ -8,9 +8,9 @@ public interface TransferDao {
 
     Transfer createTransfer(Transfer transfer);
 
-    void updateBalanceSender(Transfer transfer);
+    void updateBalance(Transfer transfer);
 
-    void updateBalanceReceiver(Transfer transfer);
+  //  void updateBalanceReceiver(Transfer transfer);
 
     // methods needed
         // add transfer - insert values into the transfer table

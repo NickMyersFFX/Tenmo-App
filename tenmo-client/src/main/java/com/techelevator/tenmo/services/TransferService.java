@@ -6,6 +6,9 @@ import com.techelevator.tenmo.model.Transfer;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
+import javax.swing.table.TableRowSorter;
+import java.math.BigDecimal;
+
 public class TransferService {
 
     private String baseApiUrl;
@@ -33,30 +36,29 @@ public class TransferService {
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setBearerAuth(currentUser.getToken());
 
-        HttpEntity<Void> requestEntity = new HttpEntity<Void>(headers);
+        HttpEntity<Transfer> requestEntity = new HttpEntity<Transfer>(headers);
 
-        ResponseEntity<Transfer> response = restTemplate.exchange(baseApiUrl + "transfer", HttpMethod.GET,
+        ResponseEntity<Transfer> response = restTemplate.exchange(baseApiUrl + "transfer", HttpMethod.POST,
         requestEntity, Transfer.class);
 
         return response.getBody();
 
     }
 
-//    transferTypeId: 2,
-//    transferStatusId: 2,
-//    accountFrom: 2001,
-//    accountTo: 2002,
-//    amount: 500.00
 
+    public Transfer updateBalance(Transfer transfer) {
 
-//    HttpHeaders headers = new HttpHeaders();
-//        headers.setContentType(MediaType.APPLICATION_JSON);
-//        headers.setBearerAuth(currentUser.getToken());
-//    HttpEntity<Void> requestEntity = new HttpEntity<Void>(headers)
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+        headers.setBearerAuth(currentUser.getToken());
 
-//        ResponseEntity<Account> response = restTemplate.exchange(baseApiUrl + "accountbalance", HttpMethod.GET,
-//        requestEntity, Account.class);
+        HttpEntity<Transfer> requestEntity = new HttpEntity<Transfer>(transfer, headers);
 
+        ResponseEntity<Transfer> response = restTemplate.exchange(baseApiUrl + "transfer/update", HttpMethod.POST,
+                requestEntity, Transfer.class);
 
+        return response.getBody();
+
+    }
 
 }
