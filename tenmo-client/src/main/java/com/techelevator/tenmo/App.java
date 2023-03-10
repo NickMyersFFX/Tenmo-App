@@ -86,6 +86,8 @@ public class App {
                 sendBucks();
             } else if (menuSelection == 5) {
                 requestBucks();
+            } else if (menuSelection == 6) {
+                viewTransferById();
             } else if (menuSelection == 0) {
                 continue;
             } else {
@@ -93,6 +95,13 @@ public class App {
             }
             consoleService.pause();
         }
+    }
+
+    private void viewTransferById() {
+        Integer promptUserInput = consoleService.promptForInt("Please enter a transfer Id to view: ");
+        Transfer transferId = transferService.getTransferById(promptUserInput);
+        consoleService.displayTransferDetails(transferId);
+
     }
 
     private void viewCurrentBalance() {
@@ -103,6 +112,9 @@ public class App {
     }
 
     private void viewTransferHistory() {
+        Transfer[] transfer = transferService.listOfTransfers();
+        consoleService.transferHistory(transfer);
+
         // TODO Auto-generated method stub
 
     }
@@ -119,19 +131,27 @@ public class App {
                 consoleService.displayUsers(user);
                 } else consoleService.printErrorMessage();
 
-        consoleService.promptForInt("Enter ID of user you are sending to (0 to cancel): ");
-            while (consoleService.promptUserForInt(0) == 0 ) {
-                break;
-                } consoleService.printMainMenu();
+      //  consoleService.promptForInt("Enter ID of user you are sending to (0 to cancel): ");
+//            while (consoleService.promptUserForInt(0) == 0 ) {
+//                break;
+//                } consoleService.printMainMenu();
            // else consoleService.promptForInt("Enter ID of user you are sending to (0 to cancel): ");
 
             int idTo = consoleService.promptForInt("Enter ID of user you are sending to (0 to cancel): ");
             BigDecimal amount = consoleService.promptForBigDecimal("Enter amount: ");
 
-            Transfer transfer = transferService.gettingTransfer
-                    (accountService.gettingAccountIdByUserId(currentUser.getUser().getId()), accountService.gettingAccountIdByUserId(idTo), amount.doubleValue());
+            if (amount.doubleValue() <= accountService.getAccountBalance().getBalance() && amount.doubleValue() > 0 ) {
+                Transfer transfer = transferService.gettingTransfer
+                        (accountService.gettingAccountIdByUserId(currentUser.getUser().getId()),
+                                accountService.gettingAccountIdByUserId(idTo), amount.doubleValue());
+                transferService.updateBalance(transfer);
+                consoleService.displayTransferDetails(transfer);
 
-            transferService.updateBalance(transfer);
+            } else {
+                consoleService.printErrorMessage();
+            }
+
+
         }
 
 

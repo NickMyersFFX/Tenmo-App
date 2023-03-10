@@ -8,8 +8,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.security.Principal;
+import java.util.List;
 
 
 @PreAuthorize("isAuthenticated()")
@@ -25,7 +27,7 @@ public class TransferController {
         }
 
     @RequestMapping(path = "/transfer", method = RequestMethod.POST)
-    public Transfer newTransfer(@RequestBody @Validated Transfer transfer) {
+    public Transfer newTransfer(@RequestBody Transfer transfer) {
             return transferDao.createTransfer(transfer);
     }
 
@@ -35,15 +37,25 @@ public class TransferController {
         transferDao.updateBalance(transfer);
     }
 
-//    @RequestMapping(path = "/transfer/receive", method = RequestMethod.POST)
-//    @ResponseStatus(HttpStatus.CREATED)
-//    public void BalanceReceiver(@RequestBody Transfer transfer) {
-//        transferDao.updateBalanceReceiver(transfer);
-//    }
+    @RequestMapping(path = "/transfer/history", method = RequestMethod.GET)
+        public List<Transfer> getTransferHistory(Principal principal) {
+            int currentUser = userDao.findIdByUsername(principal.getName());
+            return transferDao.listOfTransfers(currentUser);
 
-//
-//    @Override
-//    public Transfer sendMoney(int transferId, int accountFrom, int accountTo, double amount) {
-//        return null;
-//    }
+    }
+
+    @RequestMapping(path = "/transfer/{id}", method = RequestMethod.GET)
+    public Transfer gettingTransferById(@PathVariable("id") int transferId) {
+        Transfer transfer = transferDao.transferById(transferId);
+        if ( transfer == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Transfer not found");
+        } else {
+            return transfer;
+        }
+
+
+
+    }
+
+
 }

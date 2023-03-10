@@ -2,10 +2,12 @@ package com.techelevator.tenmo.services;
 
 
 import com.techelevator.tenmo.model.Account;
+import com.techelevator.tenmo.model.Transfer;
 import com.techelevator.tenmo.model.User;
 import com.techelevator.tenmo.model.UserCredentials;
 
 import java.math.BigDecimal;
+import java.sql.SQLOutput;
 import java.util.Scanner;
 
 // WILL HAVE TO WRITE METHODS IN HERE TO SHOW SUB MENU, BALANCE, ETC
@@ -47,6 +49,7 @@ public class ConsoleService {
         System.out.println("3: View your pending requests");
         System.out.println("4: Send TE bucks");
         System.out.println("5: Request TE bucks");
+        System.out.println("6: View transfer by Id");
         System.out.println("0: Exit");
         System.out.println();
     }
@@ -114,4 +117,31 @@ public class ConsoleService {
         System.out.print(integer);
         return integer;
     }
+
+    public void displayTransferDetails(Transfer transfer) {
+        System.out.println("-".repeat(30));
+        System.out.println("Transfer Details");
+        System.out.println("-".repeat(30));
+        System.out.println("Id: " + transfer.getTransferId());
+        System.out.println("From: " + transfer.getAccountFrom());
+        System.out.println("To: "  + transfer.getAccountTo());
+        System.out.println("Type: " + transfer.getTransferTypeId());
+        System.out.println("Status: " + transfer.getTransferStatusId());
+        System.out.println("Amount: " + transfer.getAmount());
+        System.out.println("-".repeat(30));
+    }
+
+    public void transferHistory(Transfer[] transfer) {
+        // INSERT FORMATTING
+        System.out.println("-".repeat(30));
+        System.out.println("Transfers");
+        System.out.println("-".repeat(30));
+        System.out.println("Id          From/To        Amount");
+        for (Transfer transfers : transfer) {
+            System.out.printf("%-7d From: %-10s $%1.2f\n", transfers.getTransferId(), transfers.getUsernameFrom(), transfers.getAmount());
+            System.out.printf("%-7d To: %-10s $%1.2f\n", transfers.getTransferId(), transfers.getUsernameTo(), transfers.getAmount());
+        }
+
+    }
+
 }
