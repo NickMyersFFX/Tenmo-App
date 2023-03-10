@@ -113,28 +113,47 @@ public class App {
     }
 
     private void sendBucks() {
+
         User[] user = userService.listOfAllUsers();
-        if (user != null) {
-            consoleService.displayUsers(user);
-        } else consoleService.printErrorMessage();
+            if (user != null) {
+                consoleService.displayUsers(user);
+                } else consoleService.printErrorMessage();
+
+        consoleService.promptForInt("Enter ID of user you are sending to (0 to cancel): ");
+            while (consoleService.promptUserForInt(0) == 0 ) {
+                break;
+                } consoleService.printMainMenu();
+           // else consoleService.promptForInt("Enter ID of user you are sending to (0 to cancel): ");
+
+            int idTo = consoleService.promptForInt("Enter ID of user you are sending to (0 to cancel): ");
+            BigDecimal amount = consoleService.promptForBigDecimal("Enter amount: ");
+
+            Transfer transfer = transferService.gettingTransfer
+                    (accountService.gettingAccountIdByUserId(currentUser.getUser().getId()), accountService.gettingAccountIdByUserId(idTo), amount.doubleValue());
+
+            transferService.updateBalance(transfer);
+        }
 
 
-        int idTo = consoleService.promptForInt("Please enter a User Id: ");
-        BigDecimal amount =  consoleService.promptForBigDecimal("Please enter an amount: ");
 
-        Transfer transfer = transferService.gettingTransfer
-                (accountService.gettingAccountIdByUserId(currentUser.getUser().getId()), accountService.gettingAccountIdByUserId(idTo), amount.doubleValue());
-
-        transferService.updateBalance(transfer);
-
-    }
-
-
+//    User[] user = userService.listOfAllUsers();
+//        if (user != null) {
+//        consoleService.displayUsers(user);
+//    } else consoleService.printErrorMessage();
+//
+//
+//    int idTo = consoleService.promptForInt("Enter ID of user you are sending to (0 to cancel): ");
+//    BigDecimal amount =  consoleService.promptForBigDecimal("Enter amount: ");
+//
+//    Transfer transfer = transferService.gettingTransfer
+//            (accountService.gettingAccountIdByUserId(currentUser.getUser().getId()), accountService.gettingAccountIdByUserId(idTo), amount.doubleValue());
+//
+//        transferService.updateBalance(transfer);
 
 
 	private void requestBucks() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

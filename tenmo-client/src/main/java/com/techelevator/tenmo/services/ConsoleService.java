@@ -98,10 +98,20 @@ public class ConsoleService {
     }
 
     public void displayUsers(User[] user) {
-        System.out.println("List of Users: \n");
+        System.out.println("-".repeat(30));
+        System.out.println("Users");
+        System.out.println("ID" + "             " + "Name");
+        System.out.println("-".repeat(30));
         for (User users : user) {
-            System.out.println("Name: "  + users.getUsername() + " || " + "User Id: " + users.getId());
+            System.out.println(users.getId() + "           " + users.getUsername());
         }
+        System.out.println("-".repeat(10));
+        System.out.println("\n");
 
+    }
+
+    public int promptUserForInt(Integer integer) {
+        System.out.print(integer);
+        return integer;
     }
 }
